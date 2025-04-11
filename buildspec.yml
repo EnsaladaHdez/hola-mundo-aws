@@ -4,17 +4,17 @@ phases:
   pre_build:
     commands:
       - echo "Iniciando pre_build..."
-      - $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789.dkr.ecr.us-east-1.amazonaws.com)
+      - $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 741736301150.dkr.ecr.us-east-1.amazonaws.com)
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
       - echo "Construyendo la imagen Docker..."
-      - docker build -t hola-mundo-ecr:$IMAGE_TAG .
-      - docker tag hola-mundo-ecr:$IMAGE_TAG 123456789.dkr.ecr.us-east-1.amazonaws.com/hola-mundo-ecr:$IMAGE_TAG
+      - docker build -t pid-holamundo .
+      - docker tag pid-holamundo:latest 741736301150.dkr.ecr.us-east-1.amazonaws.com/pid-holamundo:latest
   post_build:
     commands:
       - echo "Subiendo imagen a ECR..."
-      - docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/hola-mundo-ecr:$IMAGE_TAG
+      - docker push 741736301150.dkr.ecr.us-east-1.amazonaws.com/pid-holamundo:latest
       - echo "Exportando imagen..."
       - printf '[{"name":"hola-mundo","imageUri":"123456789.dkr.ecr.us-east-1.amazonaws.com/hola-mundo-ecr:%s"}]' $IMAGE_TAG > imagedefinitions.json
 
